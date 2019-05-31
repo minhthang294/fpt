@@ -29,18 +29,15 @@ require 'includes/navconnected.php';
             <a class="waves-effect waves-light btn-large col s2" href="addtrainee.php"><i class="material-icons left">add</i>Add Trainee</a>
             <div class="col s4">
             </div>
-
-            <nav class="col s6 right-align teal lighten-2">
-                <div class="nav-wrapper">
-                    <form method="GET" action="alltrainee.php">
-                        <div class="input-field">
-                            <input id="search" name="key" type="search">
-                            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                            <i class="material-icons">close</i>
-                        </div>
-                    </form>
-                </div>
-            </nav>
+            <div class="nav-wrapper col s6">
+                <form method="GET" action="alltrainee.php">
+                    <div class="input-field">
+                        <input id="search" name="key" type="search">
+                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                        <i class="material-icons">close</i>
+                    </div>
+                </form>
+            </div>
         </div>
 
     </div>

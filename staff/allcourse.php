@@ -16,7 +16,7 @@ require 'includes/navconnected.php';
             <div class="nav-wrapper">
                 <div class="col s12">
                     <a href="index.php" class="breadcrumb">Dashboard</a>
-                    <a href="alltrainee.php" class="breadcrumb">Course Management</a>
+                    <a href="allcourse.php" class="breadcrumb">Course Management</a>
                 </div>
             </div>
         </nav>
@@ -26,7 +26,17 @@ require 'includes/navconnected.php';
     <div class="row">
         <div class="col s12 ">
 
-            <a class="waves-effect waves-light btn-large" href="../admin/addcourse.php"><i class="material-icons left">add</i>Add Course</a>
+            <a class="waves-effect waves-light btn-large col s3" href="../admin/addcourse.php"><i class="material-icons left">add</i>Add Course</a>
+            <div class="col s3"></div>
+            <div class="nav-wrapper col s6">
+                <form method="GET" action="allcourse.php">
+                    <div class="input-field">
+                        <input id="search" name="key" type="search">
+                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                        <i class="material-icons">close</i>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -35,7 +45,7 @@ require 'includes/navconnected.php';
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s3"><a href="#allcourse" class="active">All Course</a></li>
+                <li class="tab col s3"><a href="#allcourse" class="active">All Courses</a></li>
                 <?php
                 include '../db.php';
 
@@ -59,7 +69,6 @@ require 'includes/navconnected.php';
                     <th data-field="ID">ID</th>
                     <th data-field="coursename">Course name</th>
                     <th data-field="category">Category</th>
-                    <th data-field="trainer">Trainer</th>
                     <th data-field="delete">Edit</th>
                     <th data-field="delete">Delete</th>
                 </tr>
@@ -67,12 +76,17 @@ require 'includes/navconnected.php';
             <tbody>
                 <?php
                 include '../db.php';
-
-                //get users
-                $queryall = "SELECT courses.id, courses.name as coursename, coursecate.name as category, CONCAT(users.firstname,' ', users.lastname) as trainer 
+                if (isset($_GET['key'])) {
+                    $key = $_GET['key'];
+                    $queryall = "SELECT courses.id, courses.name as coursename, coursecate.name as category 
                 FROM courses 
                 JOIN coursecate ON courses.coursecateid = coursecate.id 
-                JOIN users ON users.id = courses.trainerid";
+                WHERE courses.name LIKE '%{$key}%'";
+                } else {
+                    $queryall = "SELECT courses.id, courses.name as coursename, coursecate.name as category
+                FROM courses 
+                JOIN coursecate ON courses.coursecateid = coursecate.id";
+                }
                 $resultall = $connection->query($queryall);
                 if ($resultall->num_rows > 0) {
                     // output data of each row
@@ -80,13 +94,11 @@ require 'includes/navconnected.php';
                         $id_course = $rowuser['id'];
                         $coursename = $rowuser['coursename'];
                         $category = $rowuser['category'];
-                        $trainer = $rowuser['trainer'];
                         ?>
                         <tr>
                             <td><?php echo $id_course; ?></td>
-                            <td><a href=""><?= $coursename; ?></a></td>
+                            <td><a href="coursedetail.php?id=<?=$id_course; ?>"><?= $coursename; ?></a></td>
                             <td><?= $category; ?></td>
-                            <td><?= $trainer; ?></td>
                             <td><a href="editcourse.php?id=<?= $id_course; ?>"><i class="material-icons blue-text">edit</i></a></td>
                             <td><a href="deletecourse.php?id=<?= $id_course; ?>" onclick="M.toast({html: 'Deleted'})"><i class="material-icons red-text">close</i></a></td>
                         </tr>
@@ -112,7 +124,6 @@ require 'includes/navconnected.php';
                             <th data-field="ID">ID</th>
                             <th data-field="coursename">Course name</th>
                             <th data-field="category">Category</th>
-                            <th data-field="trainer">Trainer</th>
                             <th data-field="delete">Edit</th>
                             <th data-field="delete">Delete</th>
                         </tr>
@@ -122,10 +133,9 @@ require 'includes/navconnected.php';
                         include '../db.php';
 
                         //get users
-                        $queryall = "SELECT courses.id, courses.name as coursename, coursecate.name as category, CONCAT(users.firstname,' ', users.lastname) as trainer 
+                        $queryall = "SELECT courses.id, courses.name as coursename, coursecate.name as category
                 FROM courses 
-                JOIN coursecate ON courses.coursecateid = coursecate.id 
-                JOIN users ON users.id = courses.trainerid
+                JOIN coursecate ON courses.coursecateid = coursecate.id
                 WHERE coursecate.name = '$catename'";
                         $resultall = $connection->query($queryall);
                         if ($resultall->num_rows > 0) {
@@ -134,13 +144,11 @@ require 'includes/navconnected.php';
                                 $id_course = $rowuser['id'];
                                 $coursename = $rowuser['coursename'];
                                 $category = $rowuser['category'];
-                                $trainer = $rowuser['trainer'];
                                 ?>
                                 <tr>
                                     <td><?php echo $id_course; ?></td>
-                                    <td><a href=""><?= $coursename; ?></a></td>
+                                    <td><a href="coursedetail.php?id=<?=$id_course; ?>"><?= $coursename; ?></a></td>
                                     <td><?= $category; ?></td>
-                                    <td><?= $trainer; ?></td>
                                     <td><a href="editcourse.php?id=<?= $id_course; ?>"><i class="material-icons blue-text">edit</i></a></td>
                                     <td><a href="deletecourse.php?id=<?= $id_course; ?>" onclick="M.toast({html: 'Deleted'})"><i class="material-icons red-text">close</i></a></td>
                                 </tr>

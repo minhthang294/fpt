@@ -46,13 +46,12 @@ role) VALUES ('$email',
 if (isset($_POST['addcourse'])) {
 
   $name = $_POST['name'];
-  $trainerid = $_POST['trainerid'];
   $coursecateid = $_POST['coursecateid'];
   include '../db.php';
   //connecting & inserting data
 
-  $query = "INSERT INTO courses(name, trainerid, coursecateid) 
-  VALUES ('$name', '$trainerid', '$coursecateid')";
+  $query = "INSERT INTO courses(name, coursecateid) 
+  VALUES ('$name', '$coursecateid')";
 
   if ($connection->query($query) === TRUE) {
     echo "<div class='center-align'>
