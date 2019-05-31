@@ -41,3 +41,25 @@ role) VALUES ('$email',
   }
   $connection->close();
 }
+
+//add course
+if (isset($_POST['addcourse'])) {
+
+  $name = $_POST['name'];
+  $trainerid = $_POST['trainerid'];
+  $coursecateid = $_POST['coursecateid'];
+  include '../db.php';
+  //connecting & inserting data
+
+  $query = "INSERT INTO courses(name, trainerid, coursecateid) 
+  VALUES ('$name', '$trainerid', '$coursecateid')";
+
+  if ($connection->query($query) === TRUE) {
+    echo "<div class='center-align'>
+  <h5 class='black-text'>Added <span class='green-text'>$name</span> to our system</h5><br><br>
+  </div>";
+  } else {
+    echo "<h5 class='red-text'>Error: " . $query . "</h5>" . $connection->error;
+  }
+  $connection->close();
+}

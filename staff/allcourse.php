@@ -22,42 +22,44 @@ require 'includes/navconnected.php';
         </nav>
     </div>
 </div>
-
 <div class="container form">
     <div class="row">
-        <div class="col s12 left-align">
-            <a class="waves-effect waves-light btn-large col s2" href="addcourse.php"><i class="material-icons left">add</i>Add Course</a>
-            <div class="col s4">
-            </div>
+        <div class="col s12 ">
 
-            <nav class="col s6 right-align teal lighten-2">
-                <div class="nav-wrapper">
-                    <form method="GET" action="allcourse.php">
-                        <div class="input-field">
-                            <input id="search" name="key" type="search">
-                            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                            <i class="material-icons">close</i>
-                        </div>
-                    </form>
-                </div>
-            </nav>
+            <a class="waves-effect waves-light btn-large" href="../admin/addcourse.php"><i class="material-icons left">add</i>Add Course</a>
         </div>
-
     </div>
 </div>
 
 <div class="container scroll">
     <div class="row">
-        <table class="highlight striped col s12 left-align">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a href="#allcourse" class="active">All Course</a></li>
+                <?php
+                include '../db.php';
+
+                //get trainer
+                $querycate = "SELECT * FROM coursecate";
+                $resultcate = $connection->query($querycate);
+                if ($resultcate->num_rows > 0) {
+                    // output data of each row
+                    while ($rowcate = $resultcate->fetch_assoc()) {
+                        $id_cate = $rowcate['id'];
+                        $catename = $rowcate['name'];
+                        ?>
+                        <li class="tab col s3"><a href="#<?= $catename ?>"><?= $catename ?></a></li>
+                    <?php }
+            }  ?>
+            </ul>
+        </div>
+        <table class="highlight striped col s12 left-align" id="allcourse">
             <thead>
                 <tr>
-                    <th data-field="fullname">Full name</th>
-                    <th data-field="age">Age</th>
-                    <th data-field="DoB">Date of Birth</th>
-                    <th data-field="education">Education</th>
-                    <th data-field="programLang">Programming Language</th>
-                    <th data-field="TOEIC">TOEIC</th>
-                    <th data-field="experience">Experience</th>
+                    <th data-field="ID">ID</th>
+                    <th data-field="coursename">Course name</th>
+                    <th data-field="category">Category</th>
+                    <th data-field="trainer">Trainer</th>
                     <th data-field="delete">Edit</th>
                     <th data-field="delete">Delete</th>
                 </tr>
@@ -67,40 +69,87 @@ require 'includes/navconnected.php';
                 include '../db.php';
 
                 //get users
-                if (isset($_GET['key'])) {
-                    $key = $_GET['key'];
-                    $queryuser = "SELECT *, YEAR(CURDATE()) - YEAR(DoB) AS age FROM trainee WHERE name LIKE '%{$key}%'";
-                } else {
-                    $queryuser = "SELECT *, YEAR(CURDATE()) - YEAR(DoB) AS age FROM trainee";
-                }
-                $resultuser = $connection->query($queryuser);
-                if ($resultuser->num_rows > 0) {
+                $queryall = "SELECT courses.id, courses.name as coursename, coursecate.name as category, CONCAT(users.firstname,' ', users.lastname) as trainer 
+                FROM courses 
+                JOIN coursecate ON courses.coursecateid = coursecate.id 
+                JOIN users ON users.id = courses.trainerid";
+                $resultall = $connection->query($queryall);
+                if ($resultall->num_rows > 0) {
                     // output data of each row
-                    while ($rowuser = $resultuser->fetch_assoc()) {
-                        $id_user = $rowuser['id'];
-                        $name = $rowuser['name'];
-                        $age = $rowuser['age'];
-                        $DoB = $rowuser['DoB'];
-                        $education = $rowuser['education'];
-                        $programLang = $rowuser['programLang'];
-                        $TOEIC = $rowuser['TOEIC'];
-                        $experience = mysqli_real_escape_string($connection, $rowuser['experience']);
+                    while ($rowuser = $resultall->fetch_assoc()) {
+                        $id_course = $rowuser['id'];
+                        $coursename = $rowuser['coursename'];
+                        $category = $rowuser['category'];
+                        $trainer = $rowuser['trainer'];
                         ?>
                         <tr>
-                            <td><?php echo $name; ?></td>
-                            <td><?= $age; ?></td>
-                            <td><?= $DoB; ?></td>
-                            <td><?= $education; ?></td>
-                            <td><?= $programLang; ?></td>
-                            <td><?= $TOEIC; ?></td>
-                            <td><?= $experience; ?></td>
-                            <td><a href="edittrainee.php?id=<?= $id_user; ?>"><i class="material-icons blue-text">edit</i></a></td>
-                            <td><a href="deletetrainee.php?id=<?= $id_user; ?>" onclick="M.toast({html: 'Deleted'})"><i class="material-icons red-text">close</i></a></td>
+                            <td><?php echo $id_course; ?></td>
+                            <td><a href=""><?= $coursename; ?></a></td>
+                            <td><?= $category; ?></td>
+                            <td><?= $trainer; ?></td>
+                            <td><a href="editcourse.php?id=<?= $id_course; ?>"><i class="material-icons blue-text">edit</i></a></td>
+                            <td><a href="deletecourse.php?id=<?= $id_course; ?>" onclick="M.toast({html: 'Deleted'})"><i class="material-icons red-text">close</i></a></td>
                         </tr>
                     <?php }
             }  ?>
             </tbody>
         </table>
+        <?php
+        include '../db.php';
+
+        //get trainer
+        $querycate = "SELECT * FROM coursecate";
+        $resultcate = $connection->query($querycate);
+        if ($resultcate->num_rows > 0) {
+            // output data of each row
+            while ($rowcate = $resultcate->fetch_assoc()) {
+
+                $catename = $rowcate['name'];
+                ?>
+                <table class="highlight striped col s12 left-align" id="<?= $catename ?>">
+                    <thead>
+                        <tr>
+                            <th data-field="ID">ID</th>
+                            <th data-field="coursename">Course name</th>
+                            <th data-field="category">Category</th>
+                            <th data-field="trainer">Trainer</th>
+                            <th data-field="delete">Edit</th>
+                            <th data-field="delete">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        include '../db.php';
+
+                        //get users
+                        $queryall = "SELECT courses.id, courses.name as coursename, coursecate.name as category, CONCAT(users.firstname,' ', users.lastname) as trainer 
+                FROM courses 
+                JOIN coursecate ON courses.coursecateid = coursecate.id 
+                JOIN users ON users.id = courses.trainerid
+                WHERE coursecate.name = '$catename'";
+                        $resultall = $connection->query($queryall);
+                        if ($resultall->num_rows > 0) {
+                            // output data of each row
+                            while ($rowuser = $resultall->fetch_assoc()) {
+                                $id_course = $rowuser['id'];
+                                $coursename = $rowuser['coursename'];
+                                $category = $rowuser['category'];
+                                $trainer = $rowuser['trainer'];
+                                ?>
+                                <tr>
+                                    <td><?php echo $id_course; ?></td>
+                                    <td><a href=""><?= $coursename; ?></a></td>
+                                    <td><?= $category; ?></td>
+                                    <td><?= $trainer; ?></td>
+                                    <td><a href="editcourse.php?id=<?= $id_course; ?>"><i class="material-icons blue-text">edit</i></a></td>
+                                    <td><a href="deletecourse.php?id=<?= $id_course; ?>" onclick="M.toast({html: 'Deleted'})"><i class="material-icons red-text">close</i></a></td>
+                                </tr>
+                            <?php }
+                    }  ?>
+                    </tbody>
+                </table>
+            <?php }
+    }  ?>
     </div>
 </div>
 
