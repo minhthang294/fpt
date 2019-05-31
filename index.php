@@ -28,7 +28,7 @@ require $nav; ?>
       </div>
       <div id="test1" class="col s12 left-align">
 
-        <div class="card" id="particles-js">
+        <div class="card">
           <div class="row">
             <form class="col s12" method="POST">
 
