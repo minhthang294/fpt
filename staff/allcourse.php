@@ -9,6 +9,7 @@ if ($_SESSION['role'] !== 'staff') {
 require 'includes/header.php';
 require 'includes/navconnected.php';
 ?>
+
 <div class="container-fluid product-page">
     <div class="container current-page">
         <nav>
