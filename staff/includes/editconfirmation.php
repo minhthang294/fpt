@@ -24,3 +24,25 @@ if (isset($_POST['edit'])) {
     }
     $connection->close();
 }
+
+if (isset($_POST['editcourse'])) {
+    $id = $_GET['id'];
+    $name = $_POST['name'];
+    $coursecateid = $_POST['coursecateid'];
+
+
+
+    include '../db.php';
+    //connecting & inserting data
+
+    $query = "UPDATE `trainee` SET 
+    `name`='$name',`coursecateid`='$coursecateid'
+    WHERE id= '$id'";
+
+    if ($connection->query($query) === TRUE) {
+        echo "<script>alert('Updated');</script>";
+    } else {
+        echo "<h5 class='red-text'>Error: " . $query . "</h5>" . $connection->error;
+    }
+    $connection->close();
+}

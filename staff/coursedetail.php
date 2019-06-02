@@ -26,14 +26,15 @@ $id = $_GET['id'];
 <div class="container form">
     <div class="row">
         <div class="col s12 ">
-
             <a class="waves-effect waves-light btn-large col s3" href="addtopic.php?id=<?= $id; ?>"><i class="material-icons left">add</i>Add Topic</a>
-            <div class="col s3"></div>
+            <div class="col s3">
+                <a class="waves-effect waves-light btn-large" href="addtraineec.php?id=<?= $id; ?>"><i class="material-icons left">add</i>Add Trainee</a>
+            </div>
             <div class="nav-wrapper col s6">
                 <form method="GET" action="allcourse.php">
                     <div class="input-field">
-                        <input id="search" name="key" type="search">
-                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                        <input name="key" type="search" id="search">
+                        <label class="label-icon" for="search">Search Course</label>
                         <i class="material-icons">close</i>
                     </div>
                 </form>
@@ -55,7 +56,7 @@ if ($resultcourse->num_rows > 0) {
     <?php }
 }  ?>
 
-<div class="container scroll">
+<div class="container">
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
@@ -91,14 +92,65 @@ if ($resultcourse->num_rows > 0) {
                             <td><?php echo $id_topic; ?></td>
                             <td><?= $topicname; ?></td>
                             <td><?= $trainer; ?></td>
-                            <td><a href="editcourse.php?id=<?= $id_topic; ?>"><i class="material-icons blue-text">edit</i></a></td>
-                            <td><a href="deletecourse.php?id=<?= $id_topic; ?>" onclick="M.toast({html: 'Deleted'})"><i class="material-icons red-text">close</i></a></td>
+                            <td><a href="edittopic.php?id=<?= $id_topic; ?>"><i class="material-icons blue-text">edit</i></a></td>
+                            <td><a href="deletetopic.php?id=<?= $id_topic; ?>" onclick="return confirm('Are you sure?')" class="material-icons red-text">close</i></a></td>
                         </tr>
                     <?php }
             }  ?>
             </tbody>
         </table>
-        
+
+        <table class="highlight striped" id="trainee">
+            <thead>
+                <tr>
+                    <th data-field="fullname">Full name</th>
+                    <th data-field="age">Age</th>
+                    <th data-field="DoB">Date of Birth</th>
+                    <th data-field="education">Education</th>
+                    <th data-field="programLang">Programming Language</th>
+                    <th data-field="TOEIC">TOEIC</th>
+                    <th data-field="experience">Experience</th>
+                    <th data-field="delete">Edit</th>
+                    <th data-field="delete">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include '../db.php';
+
+                //get users
+                $queryuser = "SELECT *, YEAR(CURDATE()) - YEAR(DoB) AS age FROM trainee
+                JOIN listtrainee ON trainee.id = listtrainee.traineeid
+                WHERE listtrainee.courseid = '$courseid'";
+                $resultuser = $connection->query($queryuser);
+                if ($resultuser->num_rows > 0) {
+                    // output data of each row
+                    while ($rowuser = $resultuser->fetch_assoc()) {
+                        $id_user = $rowuser['id'];
+                        $name = $rowuser['name'];
+                        $age = $rowuser['age'];
+                        $DoB = $rowuser['DoB'];
+                        $education = $rowuser['education'];
+                        $programLang = $rowuser['programLang'];
+                        $TOEIC = $rowuser['TOEIC'];
+                        $experience = mysqli_real_escape_string($connection, $rowuser['experience']);
+                        ?>
+                        <tr>
+                            <td><?php echo $name; ?></td>
+                            <td><?= $age; ?></td>
+                            <td><?= $DoB; ?></td>
+                            <td><?= $education; ?></td>
+                            <td><?= $programLang; ?></td>
+                            <td><?= $TOEIC; ?></td>
+                            <td><?= $experience; ?></td>
+                            <td><a href="edittrainee.php?id=<?= $id_user; ?>"><i class="material-icons blue-text">edit</i></a></td>
+                            <td><a href="deletetraineec.php?idtrainee=<?= $id_user; ?>&courseid=<?= $courseid;?>" onclick="return confirm('Are you sure?')"><i class="material-icons red-text">close</i></a></td>
+                        </tr>
+                    <?php }
+            }  ?>
+            </tbody>
+        </table>
+
     </div>
 </div>
 

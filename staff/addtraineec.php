@@ -18,7 +18,7 @@ require $nav; ?>
     <div class="row">
       <div class="col s12">
         <ul class="tabs">
-          <li class="tab col s3"><a href="">Add Topic</a></li>
+          <li class="tab col s3"><a href="">Add Ttrainee to course</a></li>
         </ul>
       </div>
 
@@ -31,45 +31,31 @@ require $nav; ?>
 
                 <form class="col s12" method="POST" enctype="multipart/form-data">
                   <div class="row">
-
                     <div class="input-field col s12">
-                      <i class="material-icons prefix">face</i>
-                      <input id="icon_prefix" type="number" name="topicid" class="validate" required>
-                      <label for="icon_prefix">TOPIC ID</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                      <select class="icons" name="trainerid" required>
+                      <select class="icons" name="traineeid" required>
                         <?php
                         include '../db.php';
 
                         //get trainer
-                        $querytrainer = "SELECT *, CONCAT(firstname, ' ',lastname) as trainer FROM users WHERE role = 'trainer'";
-                        $resulttrainer = $connection->query($querytrainer);
-                        if ($resulttrainer->num_rows > 0) {
+                        $querytrainee = "SELECT id, name FROM trainee";
+                        $resulttrainee = $connection->query($querytrainee);
+                        if ($resulttrainee->num_rows > 0) {
                           // output data of each row
-                          while ($rowtrainer = $resulttrainer->fetch_assoc()) {
-                            $id_trainer = $rowtrainer['id'];
-                            $trainer = $rowtrainer['trainer']
+                          while ($rowtrainee = $resulttrainee->fetch_assoc()) {
+                            $id_trainee = $rowtrainee['id'];
+                            $trainee = $rowtrainee['name'];
                             ?>
                             <tr>
-                              <option value="<?= $id_trainer ?>"><?= $trainer ?></option>
+                              <option value="<?= $id_trainee; ?>">ID:<?= $id_trainee;?>. <?= $trainee; ?></option>
                             <?php }
                         }  ?>
                       </select>
-                      <label>Trainer</label>
+                      <label>Trainee</label>
                     </div>
-
-                    <div class="input-field col s6">
-                      <i class="material-icons prefix">school</i>
-                      <input id="icon_prefix" type="text" name="name" class="validate" required>
-                      <label for="icon_prefix">Topic Name</label>
-                    </div>
-
 
                     <?php require 'includes/addconfirmation.php'; ?>
                     <div class="center-align">
-                      <button type="submit" id="confirmed" name="addtopic" class="btn meh button-rounded waves-effect waves-light ">Add</button>
+                      <button type="submit" id="confirmed" name="addtraineec" class="btn meh button-rounded waves-effect waves-light ">Add</button>
                     </div>
                   </div>
                 </form>

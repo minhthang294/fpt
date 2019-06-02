@@ -26,13 +26,13 @@ require 'includes/navconnected.php';
     <div class="row">
         <div class="col s12 ">
 
-            <a class="waves-effect waves-light btn-large col s3" href="../admin/addcourse.php"><i class="material-icons left">add</i>Add Course</a>
+            <a class="waves-effect waves-light btn-large col s3" href="addcourse.php"><i class="material-icons left">add</i>Add Course</a>
             <div class="col s3"></div>
             <div class="nav-wrapper col s6">
                 <form method="GET" action="allcourse.php">
                     <div class="input-field">
                         <input id="search" name="key" type="search">
-                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                        <label class="label-icon" for="search">Search Course</label>
                         <i class="material-icons">close</i>
                     </div>
                 </form>
@@ -41,7 +41,7 @@ require 'includes/navconnected.php';
     </div>
 </div>
 
-<div class="container scroll">
+<div class="container">
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
@@ -100,7 +100,7 @@ require 'includes/navconnected.php';
                             <td><a href="coursedetail.php?id=<?=$id_course; ?>"><?= $coursename; ?></a></td>
                             <td><?= $category; ?></td>
                             <td><a href="editcourse.php?id=<?= $id_course; ?>"><i class="material-icons blue-text">edit</i></a></td>
-                            <td><a href="deletecourse.php?id=<?= $id_course; ?>" onclick="M.toast({html: 'Deleted'})"><i class="material-icons red-text">close</i></a></td>
+                            <td><a href="deletecourse.php?id=<?= $id_course; ?>" onclick="return confirm('Are your sure?')"><i class="material-icons red-text">close</i></a></td>
                         </tr>
                     <?php }
             }  ?>

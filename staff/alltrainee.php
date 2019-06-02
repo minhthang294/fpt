@@ -39,7 +39,6 @@ require 'includes/navconnected.php';
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -91,7 +90,7 @@ require 'includes/navconnected.php';
                         <td><?= $TOEIC; ?></td>
                         <td><?= $experience; ?></td>
                         <td><a href="edittrainee.php?id=<?= $id_user; ?>"><i class="material-icons blue-text">edit</i></a></td>
-                        <td><a href="deletetrainee.php?id=<?= $id_user; ?>" onclick="M.toast({html: 'Deleted'})"><i class="material-icons red-text">close</i></a></td>
+                        <td><a href="deletetrainee.php?id=<?= $id_user; ?>" onclick="return confirm('Are you sure?')"><i class="material-icons red-text">close</i></a></td>
                     </tr>
                 <?php }
         }  ?>
