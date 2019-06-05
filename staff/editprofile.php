@@ -2,7 +2,7 @@
 
 session_start();
 
-if ($_SESSION['role'] !== 'admin') {
+if ($_SESSION['role'] !== 'staff') {
   header('Location: ../index.php');
 }
 

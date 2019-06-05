@@ -26,11 +26,11 @@ $id = $_GET['id'];
 <div class="container form">
     <div class="row">
         <div class="col s12 ">
-            <a class="waves-effect waves-light btn-large col s3" href="addtopic.php?id=<?= $id; ?>"><i class="material-icons left">add</i>Add Topic</a>
-            <div class="col s3">
-                <a class="waves-effect waves-light btn-large" href="addtraineec.php?id=<?= $id; ?>"><i class="material-icons left">add</i>Add Trainee</a>
+        <a class="waves-effect waves-light btn-large col s3" href="assigntopic.php?id=<?= $id; ?>"><i class="material-icons left">add</i>Assign Topic</a>
+            <div class="col s4">
+                <a class="waves-effect waves-light btn-large" href="addtraineec.php?id=<?= $id; ?>"><i class="material-icons left">add</i>Assign Trainee</a>
             </div>
-            <div class="nav-wrapper col s6">
+            <div class="nav-wrapper col s5">
                 <form method="GET" action="allcourse.php">
                     <div class="input-field">
                         <input name="key" type="search" id="search">

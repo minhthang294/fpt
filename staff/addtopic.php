@@ -11,7 +11,7 @@ if (!isset($_SESSION['logged_in'])) {
 error_reporting(0);
 require 'includes/header.php';
 require $nav; ?>
-<?php $courseid = $_GET['id'] ?>
+
 <div class="container-fluid center-align sign">
   <div class="container">
 
@@ -31,13 +31,6 @@ require $nav; ?>
 
                 <form class="col s12" method="POST" enctype="multipart/form-data">
                   <div class="row">
-
-                    <div class="input-field col s12">
-                      <i class="material-icons prefix">face</i>
-                      <input id="icon_prefix" type="number" name="topicid" class="validate" required>
-                      <label for="icon_prefix">TOPIC ID</label>
-                    </div>
-
                     <div class="input-field col s6">
                       <select class="icons" name="trainerid" required>
                         <?php
@@ -74,7 +67,7 @@ require $nav; ?>
                   </div>
                 </form>
                 <div class="center-align">
-                  <a href="coursedetail.php?id=<?= $courseid; ?>"><button class="btn meh button-rounded waves-effect waves-light red">Back</button></a>
+                  <a onclick="window.history.go(-2);"><button class="btn meh button-rounded waves-effect waves-light red">Back</button></a>
                 </div>
 
               </div>

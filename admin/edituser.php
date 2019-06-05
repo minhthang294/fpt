@@ -16,7 +16,7 @@ require $nav; ?>
 include '../db.php';
 
 //get users
-$queryuser = "SELECT id, email, firstname, lastname,role FROM users WHERE id =" . $_GET['id'];
+$queryuser = "SELECT id, email, firstname, lastname,role,address FROM users WHERE id =" . $_GET['id'];
 $resultuser = $connection->query($queryuser);
 if ($resultuser->num_rows > 0) {
     // output data of each row
@@ -26,6 +26,7 @@ if ($resultuser->num_rows > 0) {
         $lasttname = $rowuser['lastname'];
         $role = $rowuser['role'];
         $email = $rowuser['email'];
+        $address = $rowuser['address'];
         ?>
 
 
@@ -48,14 +49,8 @@ if ($resultuser->num_rows > 0) {
 
                                         <form class="col s12" method="POST" enctype="multipart/form-data">
                                             <div class="row">
-                                                
-                                                <div class="input-field col s6">
-                                                    <i class="material-icons prefix">email</i>
-                                                    <input id="icon_prefix" type="text" name="email" class="validate" value="<?php echo $email; ?>" required>
-                                                    <label for="icon_prefix">Email</label>
-                                                </div>
 
-                                                <div class="input-field col s6">
+                                                <div class="input-field col s12">
                                                     <select class="icons" name="role" required>
                                                         <option value="trainer">Trainer</option>
                                                         <option value="staff">Training Staff</option>
@@ -64,8 +59,21 @@ if ($resultuser->num_rows > 0) {
                                                 </div>
 
                                                 <div class="input-field col s6">
+                                                    <i class="material-icons prefix">email</i>
+                                                    <input id="icon_prefix" type="text" name="email" class="validate" value="<?php echo $email; ?>" required>
+                                                    <label for="icon_prefix">Email</label>
+                                                </div>
+
+                                                <div class="input-field col s6">
+                                                    <i class="material-icons prefix">home</i>
+                                                    <input id="icon_prefix" type="text" name="address" class="validate" value="<?php echo $address; ?>" required>
+                                                    <label for="icon_prefix">Address</label>
+                                                </div>
+
+
+                                                <div class="input-field col s6">
                                                     <i class="material-icons prefix">face</i>
-                                                    <input id="icon_prefix" type="text" name="id" class="validate" value="<?= $_GET['id']?>" disabled>
+                                                    <input id="icon_prefix" type="text" name="id" class="validate" value="<?= $_GET['id'] ?>" disabled>
                                                     <label for="icon_prefix">id</label>
                                                 </div>
 
@@ -86,7 +94,7 @@ if ($resultuser->num_rows > 0) {
                                                     <input id="icon_prefix" type="password" name="password" class="validate value1" required>
                                                     <label for="icon_prefix">New Password</label>
                                                 </div>
-                                                
+
                                                 <div class="center-align">
                                                     <button type="submit" id="confirmed" name="edit" class="btn meh button-rounded waves-effect waves-light ">Update</button>
                                                 </div>

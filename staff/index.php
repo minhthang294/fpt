@@ -56,7 +56,7 @@ require 'includes/navconnected.php';
       <div class="card horizontal">
         <div class="card-stacked">
           <div class="card-content">
-            <p>Manage Profile</p>
+            <p>Manage Trainer</p>
           </div>
           <div class="card-action">
             <a href="alltrainer.php" class="blue-text">Learn more</a>

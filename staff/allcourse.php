@@ -27,7 +27,9 @@ require 'includes/navconnected.php';
         <div class="col s12 ">
 
             <a class="waves-effect waves-light btn-large col s3" href="addcourse.php"><i class="material-icons left">add</i>Add Course</a>
-            <div class="col s3"></div>
+            <div class="col s3">
+            <a class="waves-effect waves-light btn-large" href="addtopic.php"><i class="material-icons left">add</i>Add Topic</a>
+            </div>
             <div class="nav-wrapper col s6">
                 <form method="GET" action="allcourse.php">
                     <div class="input-field">

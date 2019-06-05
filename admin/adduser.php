@@ -34,19 +34,20 @@ require $nav; ?>
                 <form class="col s12" method="POST" enctype="multipart/form-data">
                   <div class="row">
 
-                    <div class="input-field col s6">
-                      <i class="material-icons prefix">email</i>
-                      <input id="icon_prefix" type="text" name="email" class="validate" required>
-                      <label for="icon_prefix">Email</label>
-                    </div>
-
-                    <div class="input-field col s6">
+                  <div class="input-field col s12">
                       <select class="icons" name="role" required>
                         <option value="trainer">Trainer</option>
                         <option value="staff">Training Staff</option>
                       </select>
                       <label>Role</label>
                     </div>
+
+                    <div class="input-field col s6">
+                      <i class="material-icons prefix">email</i>
+                      <input id="icon_prefix" type="text" name="email" class="validate" required>
+                      <label for="icon_prefix">Email</label>
+                    </div>
+
 
                     <div class="input-field col s6">
                       <i class="material-icons prefix">account_circle</i>
@@ -60,6 +61,13 @@ require $nav; ?>
                       <label for="icon_prefix">Last Name</label>
                     </div>
 
+                    <div class="input-field col s6">
+                      <i class="material-icons prefix">home</i>
+                      <input id="icon_prefix" type="text" name="address" class="validate" required>
+                      <label for="icon_prefix">Address</label>
+                    </div>
+
+                    
                     <div class="input-field col s6">
                       <i class="material-icons prefix">lock</i>
                       <input id="icon_prefix" type="password" name="password" class="validate value1" required>
